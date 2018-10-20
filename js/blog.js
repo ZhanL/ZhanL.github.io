@@ -20,8 +20,9 @@
 	var slideList = []
 	var prefix = window.slideConfig.prefix
 	var ext = '.' + window.slideConfig.ext
-	var maxCount = window.slideConfig.maxCount
-	for(var k = 0; k < 6; k++) {
+	var maxCount = parseInt(window.slideConfig.maxCount)
+	var count = 0
+	for(var k = 0; k < maxCount; k++) {
 		var n = Math.floor(Math.random() * maxCount) + 1
 		while(slideList.indexOf(n) !== -1) {
 			n = Math.floor(Math.random() * maxCount) + 1
@@ -33,7 +34,14 @@
 
 	var cdSlideShow = $('.cb-slideshow')
 	cdSlideShow.find('span').each(function (i, span) {
-		$(this).css('backgroundImage', 'url(\'' + prefix + slideList[i] + ext + '\')')
+		if (count == maxCount) {
+			count = 0
+		}
+		if (slideList.length == 1) {
+			$(this).css('animation-fill-mode','forwards');
+		} else {
+			$(this).css('backgroundImage', 'url(\'' + prefix + slideList[count++] + ext + '\')')
+		}
 	})
 
 	// ------- 处理背景图结束 -----------

@@ -12,7 +12,7 @@
     
     
     
-    <title>Hello World | ZhanL&#39;s blog</title>
+    <title>闭包 | ZhanL&#39;s blog</title>
     <link href=”http://zhanl.github.io“ rel=”prefetch” />
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -176,19 +176,26 @@
         <i class="fa fa-home"></i>
         <a href="http://zhanl.github.io">ZhanL&#39;s blog</a>
         >
-        <span>Hello World</span>
+        <span>闭包</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/2018/10/05/hello-world/">Hello World</a>
+                <a href="/2018/10/10/闭包/">闭包</a>
             </h1>
         </div>
         <div class="tag-article">
             
             <span class="label label-gal">
-                <i class="fa fa-calendar"></i> 2018-10-05
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/javascript/">javascript</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2018-10-10
             </span>
             
         </div>
@@ -198,28 +205,43 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/2018/10/05/hello-world/">Hello World</a>
+                    <a href="/2018/10/10/闭包/">闭包</a>
                 </h4>
             </div>
             <p>
-                <i class="fa fa-calendar"></i> 2018-10-05
+                <i class="fa fa-calendar"></i> 2018-10-10
             </p>
             <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/javascript/">javascript</a>
+                
                 
                 
             </p>
         </center>
     </div>
     <div class="content-article">
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><h3 id="闭包的作用"><a href="#闭包的作用" class="headerlink" title="闭包的作用"></a>闭包的作用</h3><ol>
+<li>获取函数的内部变量</li>
+<li>闭包所产生的作用域包含自身活动对象, 外部函数作用域对象, 和全局变量对象</li>
+<li><p>外部函数在函数返回后被销毁, 但活动对象依旧保留在内存中直到闭包被销毁(<code>销毁方式: function = null</code>)</p>
+<p><strong>适用：</strong><br>在动态执行环境中数据会实时发生变化, 为了保持这些非持久型变量, 我们用闭包来作为载体存储</p>
+<p><strong>缺点：</strong><br>外部函数调用对象不能释放<br>滥用会使内存泄漏</p>
+</li>
+</ol>
+<h2 id="什么是闭包"><a href="#什么是闭包" class="headerlink" title="什么是闭包"></a>什么是闭包</h2><blockquote>
+<label style="color:black">有权访问另一个函数作用域中的变量的函数</label>
+</blockquote>
+<p>在另一个函数内部定义的函数会将包含函数(外部函数)的活动对象添加到它的作用域链中, 匿名函数从包含函数中被返回后, 它的作用域链在外部函数执行完毕后其活动对象不会被销毁, 因为匿名函数的作用域链仍在引用这个函数对象, 外部函数的作用域链在函数返回后被销毁, 但他的活动对象依然留在内存中, 直到匿名函数被销毁。<code>function = null</code> 解除对该函数的引用, 等于通知垃圾回收历程将其清除, 匿名函数的作用域链被销毁, 其他作用域(除了全局作用域)也都可以安全的销毁了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">creatComparisonFunction</span>(<span class="params">propertyName</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">object1, object2</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> value1 = object1[propertyName];</span><br><span class="line">        <span class="keyword">var</span> value2 = object2[propertyName];</span><br><span class="line">        <span class="built_in">console</span>.log(value1, value2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//创建函数</span></span><br><span class="line"><span class="keyword">var</span> compareNames = creatComparisonFunction(<span class="string">'name'</span>);</span><br><span class="line"><span class="comment">//调用函数</span></span><br><span class="line">compareNames(&#123;<span class="attr">name</span>: <span class="string">'hello'</span>&#125;, &#123;<span class="attr">name</span>:<span class="string">'world'</span>&#125;);</span><br><span class="line"><span class="comment">//解除引用</span></span><br><span class="line">compareNames = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2018/10/13/iNBhwR.png" alt=""></p>
+<p>上面代码在在全局作用域中的关系如下图所示</p>
+<p><img src="https://s1.ax1x.com/2018/10/13/iNDnhV.png" alt=""></p>
+<blockquote>
+<p><span style="color:black"> 在匿名函数从<code>createComparisonFunction()</code>中被 返回后，它的作用域链被初始化为包含<code>createComparisonFunction()</code>函数的活动对象和全局变量对象。这样，匿名函数就可以访问在<code>createComparisonFunction()</code>中定义的所有变量。更为重要的是，<code>createComparisonFunction()</code>数在执行完毕后，其活动对象也不会被销毁，因为匿名函数的作用域链仍然在引用这个活动对象。换句话说，当<code>createComparisonFunction()</code>函数返回后，其执行环境的作用域链会被销毁，但它的活动对象仍然留在内存中；直到匿名函数被销毁后，<code>createComparisonFunction()</code>的活动对象才会被销毁</span></p>
+</blockquote>
 
     </div>
 </article>
@@ -329,19 +351,19 @@
         <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
             <ul class="nav nav-pills pills-gal">
                 <li class="">
-                    <a href="/2018/10/05/hello-world/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/2018/10/10/闭包/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 <li class="">
-                    <a href="/2018/10/05/hello-world/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/2018/10/10/闭包/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 <li class="">
-                    <a href="/2018/10/05/hello-world/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2018/10/10/闭包/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
             </ul>
             <div class="tab-content">
                 <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
     
-    <a href="/tags/javascript/" style="font-size: 16.004943603845117px;" class="tag-cloud-link">javascript</a>
+    <a href="/tags/javascript/" style="font-size: 19.312717340741237px;" class="tag-cloud-link">javascript</a>
     
 </div>
                 <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
